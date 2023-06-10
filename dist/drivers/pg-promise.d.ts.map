@@ -1,0 +1,1 @@
+{"version":3,"file":"pg-promise.d.ts","sourceRoot":"","sources":["../../src/drivers/pg-promise.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,SAAS,EAAE,MAAM,YAAY,CAAC;AAC5C,OAAO,KAAK,EAAiC,UAAU,EAAE,MAAM,UAAU,CAAC;AAK1E,wBAAgB,qBAAqB,CAAC,aAAa,EAAE,MAAM,SAAS,CAAC,EAAE,CAAC,GAAG,EAAE,GAAG,UAAU,CAezF;AAED,eAAe,qBAAqB,CAAC"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"knex.d.ts","sourceRoot":"","sources":["../../src/drivers/knex.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,IAAI,EAAE,MAAM,MAAM,CAAC;AACjC,OAAO,EAAE,OAAO,EAAiC,UAAU,EAAE,MAAM,UAAU,CAAC;AAG9E,wBAAgB,gBAAgB,CAAC,IAAI,EAAE,IAAI,EAAE,OAAO,EAAE,OAAO,GAAG,UAAU,CAiBzE;AAED,eAAe,gBAAgB,CAAC"}

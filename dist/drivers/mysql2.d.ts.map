@@ -1,0 +1,1 @@
+{"version":3,"file":"mysql2.d.ts","sourceRoot":"","sources":["../../src/drivers/mysql2.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,UAAU,EAAkC,MAAM,gBAAgB,CAAC;AACjF,OAAO,KAAK,EAAiC,UAAU,EAAE,MAAM,UAAU,CAAC;AAK1E,wBAAgB,kBAAkB,CAAC,aAAa,EAAE,MAAM,OAAO,CAAC,UAAU,CAAC,GAAG,UAAU,CAuBvF;AAED,eAAe,kBAAkB,CAAC"}
