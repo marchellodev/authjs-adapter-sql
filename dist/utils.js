@@ -1,29 +1,36 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.isNumeric = exports.replacePrefix = exports.buildParameterizedSql = exports.replaceUndefined = exports.createDate = exports.datetimeToString = exports.datetimeToUtcStr = exports.datetimeToLocalStr = void 0;
 //compensate zone difference before creating string of date
-export function datetimeToLocalStr(d) {
+function datetimeToLocalStr(d) {
     return datetimeToString(d, 1);
 }
+exports.datetimeToLocalStr = datetimeToLocalStr;
 //compensate zone difference before creating string of date
-export function datetimeToUtcStr(d) {
+function datetimeToUtcStr(d) {
     return datetimeToString(d, -1);
 }
-export function datetimeToString(d, correction = 1) {
+exports.datetimeToUtcStr = datetimeToUtcStr;
+function datetimeToString(d, correction = 1) {
     if (!d)
         d = new Date();
     const tzoffset = d.getTimezoneOffset() * 60000 * correction; //offset in milliseconds
     const convertedTime = new Date(d.getTime() + tzoffset).toISOString().slice(0, -1);
     return convertedTime;
 }
+exports.datetimeToString = datetimeToString;
 // convert string back to date
 // depending on the driver it can be a string of Date object
-export const createDate = (d) => {
+const createDate = (d) => {
     if (typeof d === "string") {
         return new Date(Date.parse(d));
     }
     else
         return d;
 };
+exports.createDate = createDate;
 // replace all undefined with null in array
-export function replaceUndefined(values) {
+function replaceUndefined(values) {
     return values.map((x) => {
         if (x === undefined)
             return null;
@@ -32,8 +39,9 @@ export function replaceUndefined(values) {
         return x;
     });
 }
+exports.replaceUndefined = replaceUndefined;
 // Convert template string array to sql with placeholders
-export function buildParameterizedSql(o, dialect) {
+function buildParameterizedSql(o, dialect) {
     let sql = "";
     if (Array.isArray(sql)) {
         sql = generatePlaceholders(o, dialect);
@@ -46,6 +54,7 @@ export function buildParameterizedSql(o, dialect) {
     }
     return sql;
 }
+exports.buildParameterizedSql = buildParameterizedSql;
 function generatePlaceholders(o, dialect) {
     if (dialect == "mysql")
         return o.join("?");
@@ -57,9 +66,11 @@ function generatePlaceholders(o, dialect) {
     result += o[o.length - 1];
     return result;
 }
-export function replacePrefix(sql, prefix) {
+function replacePrefix(sql, prefix) {
     return sql.map((s) => s.replace("[TABLE_PREFIX]", prefix || ""));
 }
-export function isNumeric(value) {
+exports.replacePrefix = replacePrefix;
+function isNumeric(value) {
     return /^\d+$/.test(value);
 }
+exports.isNumeric = isNumeric;

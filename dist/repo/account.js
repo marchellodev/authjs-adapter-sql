@@ -1,4 +1,7 @@
-export function convertAccount(rec) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AccountRepo = exports.convertAccount = void 0;
+function convertAccount(rec) {
     return {
         id: rec.id,
         userId: rec.user_id.toString(),
@@ -14,7 +17,8 @@ export function convertAccount(rec) {
         session_state: rec.session_state,
     };
 }
-export class AccountRepo {
+exports.convertAccount = convertAccount;
+class AccountRepo {
     constructor(sql, config) {
         this.sql = sql;
         this.config = config;
@@ -41,3 +45,4 @@ export class AccountRepo {
         return await this.getById(result.insertId);
     }
 }
+exports.AccountRepo = AccountRepo;

@@ -1,13 +1,17 @@
-import { datetimeToUtcStr, createDate } from "../utils";
-export function convertSession(rec) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SessionRepo = exports.convertSession = void 0;
+const utils_1 = require("../utils");
+function convertSession(rec) {
     return {
         id: rec.id,
         userId: rec.user_id.toString(),
-        expires: createDate(rec.expires),
+        expires: (0, utils_1.createDate)(rec.expires),
         sessionToken: rec.session_token,
     };
 }
-export class SessionRepo {
+exports.convertSession = convertSession;
+class SessionRepo {
     constructor(sql, config) {
         this.sql = sql;
         this.config = config;
@@ -27,11 +31,12 @@ export class SessionRepo {
     async create(userId, sessionToken, expires) {
         const result = await this.sql.insert `insert into [TABLE_PREFIX]sessions 
       (user_id, expires, session_token, created_at, updated_at) 
-      VALUES (${userId},${datetimeToUtcStr(expires)},${sessionToken},NOW(),NOW())`;
+      VALUES (${userId},${(0, utils_1.datetimeToUtcStr)(expires)},${sessionToken},NOW(),NOW())`;
         return await this.getById(result.insertId);
     }
     async updateExpires(sessionToken, expires) {
-        const result = await this.sql.execute `update [TABLE_PREFIX]sessions set expires = ${datetimeToUtcStr(expires)} where session_token = ${sessionToken} `;
+        const result = await this.sql.execute `update [TABLE_PREFIX]sessions set expires = ${(0, utils_1.datetimeToUtcStr)(expires)} where session_token = ${sessionToken} `;
         return await this.getById(result.insertId);
     }
 }
+exports.SessionRepo = SessionRepo;

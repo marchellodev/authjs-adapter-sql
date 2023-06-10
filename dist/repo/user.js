@@ -1,20 +1,24 @@
-import { datetimeToUtcStr, isNumeric, createDate } from "../utils";
-export function convertUser(userRecord) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.UserRepo = exports.convertUser = void 0;
+const utils_1 = require("../utils");
+function convertUser(userRecord) {
     return {
         id: userRecord.id.toString(),
         name: userRecord.name,
         email: userRecord.email,
-        emailVerified: createDate(userRecord.email_verified),
+        emailVerified: (0, utils_1.createDate)(userRecord.email_verified),
         image: userRecord.image,
     };
 }
-export class UserRepo {
+exports.convertUser = convertUser;
+class UserRepo {
     constructor(sql, config) {
         this.sql = sql;
         this.config = config;
     }
     async getByStringId(id) {
-        if (!isNumeric(id))
+        if (!(0, utils_1.isNumeric)(id))
             return null;
         return await this.getById(Number(id));
     }
@@ -32,7 +36,7 @@ export class UserRepo {
             sqlFields.push(toSnakeCase(field));
             params.push(",");
             if (value instanceof Date) {
-                values.push(datetimeToUtcStr(value));
+                values.push((0, utils_1.datetimeToUtcStr)(value));
             }
             else {
                 values.push(value);
@@ -66,6 +70,7 @@ export class UserRepo {
         return await this.getById(id);
     }
 }
+exports.UserRepo = UserRepo;
 function toSnakeCase(value) {
     return value
         .split(/\.?(?=[A-Z])/)

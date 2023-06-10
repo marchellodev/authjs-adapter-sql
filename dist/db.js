@@ -1,12 +1,15 @@
-import { AccountRepo } from "./repo/account";
-import { SessionRepo } from "./repo/session";
-import { UserRepo } from "./repo/user";
-import { VerificationTokenRepo } from "./repo/verification";
-import { replacePrefix, replaceUndefined } from "./utils";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.buildUnitOfWork = void 0;
+const account_1 = require("./repo/account");
+const session_1 = require("./repo/session");
+const user_1 = require("./repo/user");
+const verification_1 = require("./repo/verification");
+const utils_1 = require("./utils");
 function buildExtendedSqlHelpers(sqlHelpers, config) {
     const execute = async (sql, ...values) => {
-        const replacedValues = replaceUndefined(values);
-        const sqlWithPrefix = replacePrefix(sql, config.prefix);
+        const replacedValues = (0, utils_1.replaceUndefined)(values);
+        const sqlWithPrefix = (0, utils_1.replacePrefix)(sql, config.prefix);
         return await sqlHelpers.execute(sqlWithPrefix, ...replacedValues);
     };
     //samen as execute, but return the id for postgres
@@ -18,8 +21,8 @@ function buildExtendedSqlHelpers(sqlHelpers, config) {
         return await execute(insertSql, ...values);
     };
     const queryOne = async (sql, ...values) => {
-        const sqlWithPrefix = replacePrefix(sql, config.prefix);
-        const replacedValues = replaceUndefined(values);
+        const sqlWithPrefix = (0, utils_1.replacePrefix)(sql, config.prefix);
+        const replacedValues = (0, utils_1.replaceUndefined)(values);
         const rows = await sqlHelpers.query(sqlWithPrefix, ...replacedValues);
         if (rows.length == 1)
             return rows[0];
@@ -27,15 +30,16 @@ function buildExtendedSqlHelpers(sqlHelpers, config) {
     };
     return { ...sqlHelpers, execute, queryOne, insert };
 }
-export function buildUnitOfWork(sqlHelpers, config) {
+function buildUnitOfWork(sqlHelpers, config) {
     config || (config = {});
     config.prefix || (config.prefix = "");
     const esqlHelpers = buildExtendedSqlHelpers(sqlHelpers, config);
     return {
-        users: new UserRepo(esqlHelpers, config),
-        sessions: new SessionRepo(esqlHelpers, config),
-        accounts: new AccountRepo(esqlHelpers, config),
-        verificationTokens: new VerificationTokenRepo(esqlHelpers, config),
+        users: new user_1.UserRepo(esqlHelpers, config),
+        sessions: new session_1.SessionRepo(esqlHelpers, config),
+        accounts: new account_1.AccountRepo(esqlHelpers, config),
+        verificationTokens: new verification_1.VerificationTokenRepo(esqlHelpers, config),
         raw: esqlHelpers,
     };
 }
+exports.buildUnitOfWork = buildUnitOfWork;
